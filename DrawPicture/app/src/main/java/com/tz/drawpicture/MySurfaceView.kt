@@ -12,6 +12,8 @@ class MySurfaceView : SurfaceView, SurfaceHolder.Callback {
     private var mPaint: Paint? = null
     private var mCanvas: Canvas? = null
     private var mBitmap: Bitmap
+    private var realWidth:Int=0
+    private var realHeight:Int=0
 
     constructor(context: Context?) : super(context)
 
@@ -38,11 +40,16 @@ class MySurfaceView : SurfaceView, SurfaceHolder.Callback {
         val op = BitmapFactory.Options()
         op.inJustDecodeBounds = true
         BitmapFactory.decodeResource(context.resources, R.drawable.live_ad_5, op)
-        val realWidth = resources.displayMetrics.widthPixels
-        val realHeight = op.outHeight * realWidth / op.outWidth
+        realWidth = resources.displayMetrics.widthPixels
+        realHeight = op.outHeight * realWidth / op.outWidth
         mBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.live_ad_5)
         mBitmap = Bitmap.createScaledBitmap(mBitmap, realWidth, realHeight, true)
 
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        setMeasuredDimension(realWidth,realHeight)
     }
 
     override fun surfaceCreated(p0: SurfaceHolder) {
