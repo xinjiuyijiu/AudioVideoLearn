@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity() {
     private fun pcmToWav(pcmFilePath: String) {
         threadPool?.execute {
             val pcmFile = File(pcmFilePath)
-            val wavFilePath = "${pcmFile.parent}/wav_${pcmFile.name}"
+            val wavFilePath = "${pcmFile.parent}/wav_${pcmFile.name.split(".")[0]}.wav"
             val wavFile = File(wavFilePath)
             wavFile.createNewFile()
             pcmFile.copyTo(wavFile, true)
